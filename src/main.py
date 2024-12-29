@@ -75,3 +75,10 @@ prompt = ("Please listen carefully as our menu options have changed. "
           "If you are a freight carrier and need to schedule a delivery appointment, press 6. "
           "All other calls, press 7.")
 '''
+
+'''
+Things to Improve:
+1) Add Edge Cases -> if not prompt (empty audio file), if not options (missing numbers)
+2) Add resulting text flexability for parsing -> include "hit" or "choose" as precursors to options
+3) Add an option for "stay/hold on the line"
+'''
