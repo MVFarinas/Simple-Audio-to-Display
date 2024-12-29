@@ -1,4 +1,16 @@
-# Program to parse a prompt and generate a list of menu options
+import whisper
+
+def transcribe_audio(audio_file:str) -> str:
+    '''
+    Purpose: Use Whisper AI to transcribe the audio to text
+    Parameter: A string representing the file path of the audio file
+    Return: A string of transcribed text from the audio file
+    '''
+
+    # Base used for simple tasks, can be changed depending on size
+    model = whisper.load_model('base') 
+    result = model.transcribe(audio_file)
+    return result['text']
 
 def find_indices(prompt:str) -> tuple:
     """
@@ -7,7 +19,7 @@ def find_indices(prompt:str) -> tuple:
     Return: A tuple of two lists - end_indices for sentence endings and num_indices for numbers
     """
 
-    #Initializing empty lists
+    # Initializing empty lists
     end_indices = []
     num_indices = []
     
@@ -39,25 +51,27 @@ def make_options(prompt:str, end_indices:list, num_indices:list) -> list:
         options.append(option)
     return options
 
-def main(prompt:str) -> None:
+def main(audio_file:str) -> None:
     """
-    Purpose: Main function to generate and print menu options from the given prompt
-    Parameters: The string of text (prompt)
+    Purpose: Main function to print menu options from the given audio
+    Parameters: The string of text (audio file)
     Return: None
     """
-    
+
+    # Generating the prompt using the helper
+    prompt = transcribe_audio(audio_file)
+
     end_indices, num_indices = find_indices(prompt)
     options = make_options(prompt, end_indices, num_indices)
     for option in options:
         print(option)
 
-# Example Input prompt
+'''
+Example Input prompt from audio file
 prompt = ("Please listen carefully as our menu options have changed. "
           "For residential sales, please press 1. For installer and integrator sales, press 2. "
           "For product questions or technical support, please press 3. If you have a question about an existing order, "
           "or for any other customer service inquiries, press 4. If you are a current supplier, please press 5. "
           "If you are a freight carrier and need to schedule a delivery appointment, press 6. "
           "All other calls, press 7.")
-
-# Execute the program
-main(prompt)
+'''
